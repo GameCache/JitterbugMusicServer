@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using static Bullseye.Targets;
 using static SimpleExec.Command;
 
-namespace CodeTemplate.Build
+namespace JitterbugMusicServer.Build
 {
     /// <summary>Manages build behavior for the solution.</summary>
     public static class Program
