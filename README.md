@@ -1,12 +1,12 @@
-# Code Template
+# Jitterbug Music Server
 
-[![Build](https://github.com/GameCache/CodeTemplate/workflows/Integration/badge.svg)](../../actions?query=workflow%3AIntegration) [![CodeCov Coverage](https://codecov.io/gh/GameCache/CodeTemplate/branch/main/graph/badge.svg)](https://codecov.io/gh/GameCache/CodeTemplate/branch/main)
+[![Build](https://github.com/GameCache/JitterbugMusicServer/workflows/Integration/badge.svg)](../../actions?query=workflow%3AIntegration) [![CodeCov Coverage](https://codecov.io/gh/GameCache/JitterbugMusicServer/branch/main/graph/badge.svg)](https://codecov.io/gh/GameCache/JitterbugMusicServer/branch/main)
 
-Quick template to start C# projects with. View the [documentation site](https://gamecache.github.io/CodeTemplate/) for instructions and more.
+Quick template to start C# projects with. View the [documentation site](https://gamecache.github.io/JitterbugMusicServer/) for instructions and more.
 
 ## Documentation
 
-The documentation site is located here: https://gamecache.github.io/CodeTemplate/
+The documentation site is located here: https://gamecache.github.io/JitterbugMusicServer/
 
 The raw files can be viewed from the [docs](docs) folder or built into a local site using Jekyll.
 
