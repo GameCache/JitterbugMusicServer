@@ -1,0 +1,24 @@
+{
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "git.enableCommitSigning": true,
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+        120,
+        140
+    ],
+    "cSpell.words": [
+        "autobuild",
+        "cobertura",
+        "codecov",
+        "codeql",
+        "cref",
+        "globaltool",
+        "msbuild",
+        "Randomizer",
+        "reportgenerator",
+        "signoff",
+        "targetdir",
+        "xunit"
+    ]
+}
