@@ -6,8 +6,15 @@ dotnet_analyzer_diagnostic.severity = warning
 # IDE0011: Add braces
 csharp_prefer_braces = when_multiline:warning
 
+# CS8602: Dereference of a possibly null reference.
+dotnet_diagnostic.CS8602.severity = none
+# CS8604: Possible null reference argument for parameter.
+dotnet_diagnostic.CS8604.severity = none
+
 # CA1034: Nested types should not be visible
 dotnet_diagnostic.CA1034.severity = none
+# CA1062: Validate arguments of public methods
+dotnet_diagnostic.CA1062.severity = none
 # CA1307: Specify StringComparison for clarity
 dotnet_diagnostic.CA1307.severity = none
 # CA1707: Identifiers should not contain underscores
@@ -16,6 +23,8 @@ dotnet_diagnostic.CA1707.severity = none
 dotnet_diagnostic.CA1812.severity = none
 # CA1805: Do not initialize unnecessarily
 dotnet_diagnostic.CA1805.severity = none
+# CA2234: Pass System.Uri objects instead of strings
+dotnet_diagnostic.CA2234.severity = none
 
 # CS1591: Missing XML comment for publicaly visible
 dotnet_diagnostic.CS1591.severity = none
