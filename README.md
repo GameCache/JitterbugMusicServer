@@ -2,6 +2,8 @@
 
 [![Build](https://github.com/GameCache/JitterbugMusicServer/workflows/Integration/badge.svg)](../../actions?query=workflow%3AIntegration) [![CodeCov Coverage](https://codecov.io/gh/GameCache/JitterbugMusicServer/branch/main/graph/badge.svg)](https://codecov.io/gh/GameCache/JitterbugMusicServer/branch/main)
 
+dotnet run --launch-profile https
+
 Quick template to start C# projects with. View the [documentation site](https://gamecache.github.io/JitterbugMusicServer/) for instructions and more.
 
 ## Documentation
@@ -22,6 +24,7 @@ View the [license](LICENSE) file for more details.
 
 ## Acknowledgments
 
+* [OpenSubsonic](https://github.com/opensubsonic/) + [Subsonic](http://www.subsonic.org/pages/index.jsp): For a common API.
 * [CreateAndFake](https://github.com/CreateAndFake/CreateAndFake): For testing behavior.
 * [xUnit](https://xunit.github.io/): For running tests.
 * [Coverlet](https://github.com/tonerdo/coverlet) + [ReportGenerator](https://danielpalme.github.io/ReportGenerator/) + [CodeCov](https://codecov.io/): For test coverage.

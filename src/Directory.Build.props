@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <AnalysisMode>All</AnalysisMode>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <RootNamespace>JitterbugMusicServer.$(MSBuildProjectName)</RootNamespace>
     <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)..\artifacts\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
@@ -13,12 +13,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MinVer" Version="4.3.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="4.8.0-1.final" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
-    <AssemblyAttribute Include="CLSCompliantAttribute">
-      <_Parameter1>true</_Parameter1>
-    </AssemblyAttribute>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>FakerTypes</_Parameter1>
     </AssemblyAttribute>

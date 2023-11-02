@@ -1,6 +1,5 @@
 {
     "omnisharp.enableEditorConfigSupport": true,
-    "omnisharp.enableRoslynAnalyzers": true,
     "git.enableCommitSigning": true,
     "editor.formatOnSave": true,
     "editor.rulers": [
@@ -13,7 +12,9 @@
         "codecov",
         "codeql",
         "cref",
+        "deserializers",
         "globaltool",
+        "jsop",
         "msbuild",
         "Randomizer",
         "reportgenerator",
