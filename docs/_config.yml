@@ -2,5 +2,5 @@ theme: jekyll-theme-architect
 markdown: kramdown
 highlighter: rouge
 
-title: JitterbugMusicServer
+title: JitterbugMusic
 description: Quick template to start C# projects with.
