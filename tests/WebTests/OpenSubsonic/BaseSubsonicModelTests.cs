@@ -1,10 +1,8 @@
 using CreateAndFake;
 using CreateAndFake.Fluent;
-using Xunit;
-using System.Xml.Serialization;
-using System.IO;
+using JitterbugMusicServer.WebTests.Conversion;
 using System.Text.Json;
-using System.Xml;
+using Xunit;
 
 namespace JitterbugMusicServer.WebTests.OpenSubsonic;
 
@@ -23,67 +21,22 @@ public abstract class BaseSubsonicModelTests<T> where T : new()
     }
 
     [Theory, RandomData]
-    internal void DeserializesFromJson(T original)
+    internal void RoundTripsViaJson(T original)
     {
         original = FixModel(original);
-        string json = JsonSerializer.Serialize(original);
-
-        JsonSerializer.Deserialize(json, original.GetType()).Assert().Is(original, json);
+        ConvertTester.JsonTrip(original);
     }
 
     [Theory, RandomData]
-    internal void SerializesToXml(T original)
+    internal void RoundTripsViaXml(T original)
     {
         original = FixModel(original);
-        XmlSerializer serializer = new(original.GetType());
-
-        string xml;
-        using (StringWriter writer = new())
-        {
-            serializer.Serialize(writer, original);
-            xml = writer.ToString();
-        }
-
-        xml.Assert().IsNot(null);
-    }
-
-    [Theory, RandomData]
-    internal void DeserializesFromXml(T original)
-    {
-        original = FixModel(original);
-        XmlSerializer serializer = new(original.GetType());
-
-        string xml;
-        using (StringWriter writer = new())
-        {
-            serializer.Serialize(writer, original);
-            xml = writer.ToString();
-        }
-
-        using (StringReader text = new(xml))
-        using (XmlReader reader = XmlReader.Create(text))
-        {
-            serializer.Deserialize(reader).Assert().Is(original, xml);
-        }
+        ConvertTester.XmlTrip(original);
     }
 
     [Fact]
-    internal virtual void DeserializesDefaultsFromXml()
+    internal virtual void RoundTripsDefaultsViaXml()
     {
-        T original = new();
-        XmlSerializer serializer = new(original.GetType());
-
-        string xml;
-        using (StringWriter writer = new())
-        {
-            serializer.Serialize(writer, original);
-            xml = writer.ToString();
-        }
-
-        using (StringReader text = new(xml))
-        using (XmlReader reader = XmlReader.Create(text))
-        {
-            serializer.Deserialize(reader).Assert().Is(original, xml);
-        }
+        ConvertTester.XmlTrip(new T());
     }
 }

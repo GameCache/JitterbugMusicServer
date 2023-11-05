@@ -10,40 +10,52 @@ public sealed class SystemController : ControllerBase
 {
     /// <summary>Used to test connectivity with the server.</summary>
     /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
-    /// <returns><inheritdoc cref="SubsonicResponse" path="/summary"/></returns>
+    /// <returns><inheritdoc cref="NoContentModel" path="/summary"/></returns>
     [HttpGet("ping")]
-    public SubsonicResponse Ping([FromQuery] SubsonicRequest standard)
+    public SubsonicResponse<NoContentModel> Ping([FromQuery] SubsonicRequest standard)
     {
-        return new SubsonicResponse();
+        return new SubsonicResponse<NoContentModel>();
     }
 
     /// <summary>Get details about the software license.</summary>
     /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
-    /// <returns><inheritdoc cref="LicenseResponse" path="/summary"/></returns>
+    /// <returns><inheritdoc cref="LicenseModel" path="/summary"/></returns>
     [HttpGet("getLicense")]
-    public LicenseResponse GetLicense([FromQuery] SubsonicRequest standard)
+    public SubsonicResponse<LicenseModel> GetLicense([FromQuery] SubsonicRequest standard)
     {
-        return new LicenseResponse()
+        return new SubsonicResponse<LicenseModel>()
         {
-            License = new LicenseModel()
+            Content = new LicenseModel()
             {
                 Email = "demo@demo.org",
                 LicenseExpires = DateTime.UtcNow.AddYears(1),
                 TrialExpires = DateTime.UtcNow
+            },
+            Error = new()
+            {
+                Code = 5,
+                Message = "test"
             }
         };
     }
 
     /// <summary>List the OpenSubsonic extensions supported by this server.</summary>
     /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
-    /// <returns><inheritdoc cref="ExtensionsResponse" path="/summary"/></returns>
+    /// <returns><inheritdoc cref="ExtensionsModel" path="/summary"/></returns>
     [HttpGet("getOpenSubsonicExtensions")]
-    public ExtensionsResponse GetSupportedExtensions([FromQuery] SubsonicRequest standard)
+    public SubsonicResponse<ExtensionsModel> GetSupportedExtensions([FromQuery] SubsonicRequest standard)
     {
-        return new ExtensionsResponse(new[] {
-            new ExtensionModel("template", new [] { 1, 2 }),
-            new ExtensionModel("transcodeOffset", new[] { 1 })
-        });
+        return new SubsonicResponse<ExtensionsModel>()
+        {
+            Content = new ExtensionsModel()
+            {
+                OpenSubsonicExtensions = new[]
+                {
+                    new ExtensionModel() { Name = "template", Versions = new [] { 1, 2 } },
+                    new ExtensionModel() { Name = "transcodeOffset", Versions = new[] { 1 } }
+                }
+            }
+        };
     }
 }
 

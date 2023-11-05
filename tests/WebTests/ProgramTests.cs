@@ -1,5 +1,6 @@
 using CreateAndFake.Fluent;
 using JitterbugMusicServer.Web.OpenSubsonic;
+using JitterbugMusicServer.Web.OpenSubsonic.System;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System;
 using System.Net.Http;
@@ -38,8 +39,8 @@ public class ProgramTests(WebApplicationFactory<Program> factory) : IClassFixtur
 
         using (XmlReader reader = XmlReader.Create(await response.Content.ReadAsStreamAsync().ConfigureAwait(false)))
         {
-            object? result = new XmlSerializer(typeof(SubsonicResponse)).Deserialize(reader);
-            (result as SubsonicResponse).Assert().IsNot(null);
+            object? result = new XmlSerializer(typeof(SubsonicResponse<NoContentModel>)).Deserialize(reader);
+            (result as SubsonicResponse<NoContentModel>).Assert().IsNot(null);
         }
     }
 
@@ -56,9 +57,9 @@ public class ProgramTests(WebApplicationFactory<Program> factory) : IClassFixtur
 
         object? result = JsonSerializer.Deserialize(
             await response.Content.ReadAsStringAsync().ConfigureAwait(false),
-            typeof(ResponseJsonWrapper<SubsonicResponse>));
+            typeof(SubsonicResponse<NoContentModel>));
 
-        (result as ResponseJsonWrapper<SubsonicResponse>).Assert().IsNot(null);
+        (result as SubsonicResponse<NoContentModel>).Assert().IsNot(null);
     }
 
     [Fact]
@@ -89,8 +90,8 @@ public class ProgramTests(WebApplicationFactory<Program> factory) : IClassFixtur
 
         using (XmlReader reader = XmlReader.Create(await response.Content.ReadAsStreamAsync().ConfigureAwait(false)))
         {
-            object? result = new XmlSerializer(typeof(SubsonicResponse)).Deserialize(reader);
-            (result as SubsonicResponse).Assert().IsNot(null);
+            object? result = new XmlSerializer(typeof(SubsonicResponse<NoContentModel>)).Deserialize(reader);
+            (result as SubsonicResponse<NoContentModel>).Assert().IsNot(null);
         }
     }
 

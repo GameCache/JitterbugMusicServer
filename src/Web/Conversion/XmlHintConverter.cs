@@ -1,4 +1,5 @@
 using System.Xml;
+using JitterbugMusicServer.Web.Conversion.Series;
 
 namespace JitterbugMusicServer.Web.Conversion;
 
@@ -12,18 +13,18 @@ public static class XmlHintConverter
     /// <param name="attributeHints">Convert behavior for properties representing attributes.</param>
     /// <param name="elementHints">Convert behavior for properties representing elements.</param>
     public static void ToXml<T>(XmlWriter writer, T instance,
-        IEnumerable<XmlHint<T>>? attributeHints, IEnumerable<XmlHint<T>>? elementHints)
+        IEnumerable<IConvertHint<T>>? attributeHints, IEnumerable<IConvertHint<T>>? elementHints)
     {
         if (attributeHints != null)
         {
-            foreach (XmlHint<T> hint in attributeHints)
+            foreach (IConvertHint<T> hint in attributeHints)
             {
                 hint.WriteAttribute(writer, instance);
             }
         }
         if (elementHints != null)
         {
-            foreach (XmlHint<T> hint in elementHints)
+            foreach (IConvertHint<T> hint in elementHints)
             {
                 hint.WriteElement(writer, instance);
             }
@@ -38,18 +39,19 @@ public static class XmlHintConverter
     /// <param name="elementHints">Convert behavior for properties representing elements.</param>
     /// <exception cref="ArgumentNullException">When <paramref name="reader"/> is null.</exception>
     public static void FromXml<T>(XmlReader? reader, T instance,
-        IEnumerable<XmlHint<T>>? attributeHints, IEnumerable<XmlHint<T>>? elementHints)
+        IEnumerable<IConvertHint<T>>? attributeHints, IEnumerable<IConvertHint<T>>? elementHints)
     {
         if (reader == null) throw new ArgumentNullException(nameof(reader));
         if (attributeHints != null)
         {
-            foreach (XmlHint<T> hint in attributeHints)
+            foreach (IConvertHint<T> hint in attributeHints)
             {
                 hint.ReadAttribute(reader, instance);
             }
         }
 
-        IDictionary<string, XmlHint<T>> elements = (elementHints ?? Array.Empty<XmlHint<T>>())
+        IDictionary<string, IConvertHint<T>> elements
+            = (elementHints ?? Array.Empty<IConvertHint<T>>())
             .ToDictionary(h => h.Name, h => h);
 
         if (reader.IsEmptyElement)
@@ -63,9 +65,12 @@ public static class XmlHintConverter
             {
                 if (reader.IsStartElement())
                 {
-                    if (elements.TryGetValue(reader.Name, out XmlHint<T>? hint))
+                    if (elements.TryGetValue(reader.Name, out IConvertHint<T>? hint))
                     {
-                        _ = elements.Remove(reader.Name);
+                        if (elements[reader.Name] is not ISeriesConvertHint<T>)
+                        {
+                            _ = elements.Remove(reader.Name);
+                        }
                         hint.ReadElement(reader, instance);
                     }
                     else
@@ -81,9 +86,16 @@ public static class XmlHintConverter
             reader.ReadEndElement();
         }
 
-        foreach (XmlHint<T> hint in elements.Values)
+        foreach (IConvertHint<T> hint in elements.Values)
         {
-            hint.ResetToDefault(instance);
+            if (hint is ISeriesConvertHint<T> series)
+            {
+                series.FinalizeRecording(instance);
+            }
+            else
+            {
+                hint.ResetToDefault(instance);
+            }
         }
     }
 }

@@ -1,25 +1,26 @@
-using System.Xml.Serialization;
-using System.Xml;
+using JitterbugMusicServer.Web.Conversion;
+using JitterbugMusicServer.Web.Conversion.Simple;
+using JitterbugMusicServer.Web.Conversion.Series;
 
 namespace JitterbugMusicServer.Web.OpenSubsonic.System;
 
-#pragma warning disable CA1819
-
 /// <summary>A supported OpenSubsonic API extension.</summary>
-/// <param name="name"><inheritdoc cref="Name" path="/summary"/></param>
-/// <param name="versions"><inheritdoc cref="Versions" path="/summary"/></param>
-public sealed class ExtensionModel(string name, IEnumerable<int> versions)
+public sealed class ExtensionModel()
+    : XmlHintSerializable<ExtensionModel>(_ConvertAttributeHints, _ConvertElementHints)
 {
+    /// <inheritdoc cref="XmlHintSerializable{T}.AttributeHints" path="/summary"/>
+    private static readonly IEnumerable<IConvertHint<ExtensionModel>> _ConvertAttributeHints = [
+        new StringConvertHint<ExtensionModel>("name", m => m.Name, (m, v) => m.Name = v)
+    ];
+
+    /// <inheritdoc cref="XmlHintSerializable{T}.ElementHints" path="/summary"/>
+    private static readonly IEnumerable<IConvertHint<ExtensionModel>> _ConvertElementHints = [
+        new IntSeriesConvertHint<ExtensionModel>(null, "version", m => m.Versions, (m, v) => m.Versions = v)
+    ];
+
     /// <summary>Name of the extension.</summary>
-    [XmlAttribute("name")]
-    public string Name { get; set; } = name;
+    public string? Name { get; set; }
 
     /// <summary>Supported versions of the extension.</summary>
-    [XmlElement("version")]
-    public int[] Versions { get; set; } = versions.ToArray();
-
-    /// <inheritdoc cref="ExtensionModel"/>
-    public ExtensionModel() : this("", Array.Empty<int>()) { }
+    public IEnumerable<int>? Versions { get; set; }
 }
-
-#pragma warning restore CA1819

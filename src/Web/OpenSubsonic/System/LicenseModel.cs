@@ -1,21 +1,18 @@
-using System.Xml.Serialization;
 using JitterbugMusicServer.Web.Conversion;
+using JitterbugMusicServer.Web.Conversion.Simple;
 
 namespace JitterbugMusicServer.Web.OpenSubsonic.System;
 
 /// <summary>A user's license status.</summary>
-public sealed class LicenseModel : XmlHintSerializable<LicenseModel>, IXmlSerializable
+public sealed class LicenseModel() : SubsonicContent<LicenseModel>("license", _ConvertAttributeHints, null)
 {
     /// <inheritdoc cref="XmlHintSerializable{T}.AttributeHints" path="/summary"/>
-    private static readonly IEnumerable<XmlHint<LicenseModel>> _ConvertAttributeHints = [
-        new XmlBoolHint<LicenseModel>("valid", m => m.Valid, (m, v) => m.Valid = v ?? false),
-        new XmlStringHint<LicenseModel>("email", m => m.Email, (m, v) => m.Email = v),
-        new XmlDateTimeHint<LicenseModel>("licenseExpires", m => m.LicenseExpires, (m, v) => m.LicenseExpires = v),
-        new XmlDateTimeHint<LicenseModel>("trialExpires", m => m.TrialExpires, (m, v) => m.TrialExpires = v),
+    private static readonly IEnumerable<IConvertHint<LicenseModel>> _ConvertAttributeHints = [
+        new BoolConvertHint<LicenseModel>("valid", m => m.Valid, (m, v) => m.Valid = v ?? false),
+        new StringConvertHint<LicenseModel>("email", m => m.Email, (m, v) => m.Email = v),
+        new DateTimeConvertHint<LicenseModel>("licenseExpires", m => m.LicenseExpires, (m, v) => m.LicenseExpires = v),
+        new DateTimeConvertHint<LicenseModel>("trialExpires", m => m.TrialExpires, (m, v) => m.TrialExpires = v),
     ];
-
-    /// <inheritdoc cref="LicenseModel"/>
-    public LicenseModel() : base(_ConvertAttributeHints, null) { }
 
     /// <summary>If the license is useable.</summary>
     public bool Valid { get; set; } = true;

@@ -1,10 +1,10 @@
 using System.Globalization;
 
-namespace JitterbugMusicServer.Web.Conversion;
+namespace JitterbugMusicServer.Web.Conversion.Simple;
 
 /// <inheritdoc/>
-public sealed class XmlDateTimeHint<T>(string name, Func<T, DateTime?> getter, Action<T, DateTime?> setter)
-    : BaseXmlHint<T, DateTime?>(name, getter, setter)
+public sealed class DateTimeConvertHint<T>(string name, Func<T, DateTime?> getter, Action<T, DateTime?> setter)
+    : BaseSimpleConvertHint<T, DateTime?>(name, getter, setter)
 {
     /// <inheritdoc/>
     protected override string? ConvertToString(DateTime? value)

@@ -1,8 +1,8 @@
-namespace JitterbugMusicServer.Web.Conversion;
+namespace JitterbugMusicServer.Web.Conversion.Simple;
 
 /// <inheritdoc/>
-public sealed class XmlBoolHint<T>(string name, Func<T, bool?> getter, Action<T, bool?> setter)
-    : BaseXmlHint<T, bool?>(name, getter, setter)
+public sealed class BoolConvertHint<T>(string name, Func<T, bool?> getter, Action<T, bool?> setter)
+    : BaseSimpleConvertHint<T, bool?>(name, getter, setter)
 {
     /// <inheritdoc/>
     protected override string? ConvertToString(bool? value)

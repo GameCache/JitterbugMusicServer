@@ -4,19 +4,19 @@ using System.Xml.Schema;
 
 namespace JitterbugMusicServer.Web.Conversion;
 
-/// <summary>Enables XML serialization via <see cref="XmlHint{T}"/></summary>
+/// <summary>Enables XML serialization via <see cref="IConvertHint{T}"/></summary>
 /// <typeparam name="T">Type self-reference.</typeparam>
 /// <param name="attributeHints"><inheritdoc cref="AttributeHints" path="/summary"/></param>
 /// <param name="elementHints"><inheritdoc cref="ElementHints" path="/summary"/></param>
 public abstract class XmlHintSerializable<T>(
-    IEnumerable<XmlHint<T>>? attributeHints, IEnumerable<XmlHint<T>>? elementHints)
+    IEnumerable<IConvertHint<T>>? attributeHints, IEnumerable<IConvertHint<T>>? elementHints)
     : IXmlSerializable where T : XmlHintSerializable<T>
 {
     /// <summary>Convert behavior for properties representing attributes.</summary>
-    protected IEnumerable<XmlHint<T>>? AttributeHints { get; } = attributeHints;
+    protected IEnumerable<IConvertHint<T>>? AttributeHints { get; } = attributeHints;
 
     /// <summary>Convert behavior for properties representing elements.</summary>
-    protected IEnumerable<XmlHint<T>>? ElementHints { get; } = elementHints;
+    protected IEnumerable<IConvertHint<T>>? ElementHints { get; } = elementHints;
 
     /// <inheritdoc/>
     public XmlSchema? GetSchema()

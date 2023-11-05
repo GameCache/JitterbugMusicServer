@@ -8,20 +8,24 @@ using Microsoft.Net.Http.Headers;
 
 namespace JitterbugMusicServer.Web.OpenSubsonic;
 
+/// <summary>Controls Subsonic serialization based upon format in request header.</summary>
 internal sealed class SubsonicOutputFormatter : TextOutputFormatter
 {
+    /// <summary>Standard XML formatter to use for serialization.</summary>
     private static readonly XmlSerializerOutputFormatter _XmlFormatter = new(new XmlWriterSettings
     {
         OmitXmlDeclaration = true,
         NamespaceHandling = NamespaceHandling.OmitDuplicates
     });
 
+    /// <summary>Standard JSON formatter to use for serialization.</summary>
     private static readonly SystemTextJsonOutputFormatter _JsonFormatter = new(new JsonSerializerOptions
     {
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     });
 
+    /// <inheritdoc cref="SubsonicOutputFormatter"/>
     public SubsonicOutputFormatter()
     {
         SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse("application/json"));
@@ -34,17 +38,8 @@ internal sealed class SubsonicOutputFormatter : TextOutputFormatter
     /// <inheritdoc/>
     protected override bool CanWriteType(Type? type)
     {
-        return typeof(SubsonicResponse).IsAssignableFrom(type);
-    }
-
-    private static object CreateJsonWrapper(object content)
-    {
-#pragma warning disable CS8602
-        return typeof(ResponseJsonWrapper<>)
-            .MakeGenericType(content.GetType())
-            .GetConstructor([content.GetType()])
-            .Invoke([content]);
-#pragma warning restore CS8602
+        return true;
+        //return typeof(SubsonicResponse<>).IsAssignableFrom(type);
     }
 
     /// <inheritdoc/>
@@ -62,35 +57,25 @@ internal sealed class SubsonicOutputFormatter : TextOutputFormatter
             {
                 case "json":
                     SetMediaTypeHeader(context, "application/json");
-
-                    object wrapper = CreateJsonWrapper(context.Object);
-                    return _JsonFormatter.WriteResponseBodyAsync(new OutputFormatterWriteContext(
-                        context.HttpContext, context.WriterFactory, wrapper.GetType(), wrapper), selectedEncoding);
+                    return _JsonFormatter.WriteResponseBodyAsync(context, selectedEncoding);
                 case "jsonp":
                     SetMediaTypeHeader(context, "text/javascript");
-                    return WriteJsonpResponseBodyAsync(context.Object, context, selectedEncoding);
+                    return WriteJsonpResponseBodyAsync(context, selectedEncoding);
                 default:
                     SetMediaTypeHeader(context, "application/xml");
                     return _XmlFormatter.WriteResponseBodyAsync(context, selectedEncoding);
             }
         }
-        return Task.CompletedTask;
-    }
-
-    private static void SetMediaTypeHeader(OutputFormatterWriteContext context, string mediaType)
-    {
-        context.HttpContext.Response.ContentType = new MediaTypeHeaderValue(mediaType)
+        else
         {
-            Charset = "utf-8"
-        }.ToString();
+            return Task.CompletedTask;
+        }
     }
 
     /// <inheritdoc/>
     private static async Task WriteJsonpResponseBodyAsync(
-        object content, OutputFormatterWriteContext context, Encoding selectedEncoding)
+        OutputFormatterWriteContext context, Encoding selectedEncoding)
     {
-        object wrapper = CreateJsonWrapper(content);
-
         string? callback;
         if (context.HttpContext.Request.Query.TryGetValue("callback", out StringValues value))
         {
@@ -102,8 +87,18 @@ internal sealed class SubsonicOutputFormatter : TextOutputFormatter
         }
 
         await context.HttpContext.Response.WriteAsync(callback + "(", selectedEncoding).ConfigureAwait(false);
-        await _JsonFormatter.WriteResponseBodyAsync(new OutputFormatterWriteContext(
-            context.HttpContext, context.WriterFactory, wrapper.GetType(), wrapper), selectedEncoding).ConfigureAwait(false);
+        await _JsonFormatter.WriteResponseBodyAsync(context, selectedEncoding).ConfigureAwait(false);
         await context.HttpContext.Response.WriteAsync(");", selectedEncoding).ConfigureAwait(false);
+    }
+
+    /// <summary>Fixes the content type header.</summary>
+    /// <param name="context">Current context to fix.</param>
+    /// <param name="mediaType">Media type for the content.</param>
+    private static void SetMediaTypeHeader(OutputFormatterWriteContext context, string mediaType)
+    {
+        context.HttpContext.Response.ContentType = new MediaTypeHeaderValue(mediaType)
+        {
+            Charset = "utf-8"
+        }.ToString();
     }
 }

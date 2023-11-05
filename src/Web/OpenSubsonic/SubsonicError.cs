@@ -1,16 +1,20 @@
-using System.Xml;
-using System.Xml.Serialization;
+using JitterbugMusicServer.Web.Conversion;
+using JitterbugMusicServer.Web.Conversion.Simple;
 
 namespace JitterbugMusicServer.Web.OpenSubsonic;
 
 /// <summary>Encountered error.</summary>
-public sealed class SubsonicError
+public sealed class SubsonicError() : XmlHintSerializable<SubsonicError>(_ConvertAttributeHints, null)
 {
+    /// <inheritdoc cref="XmlHintSerializable{T}.AttributeHints" path="/summary"/>
+    private static readonly IEnumerable<IConvertHint<SubsonicError>> _ConvertAttributeHints = [
+        new IntConvertHint<SubsonicError>("code", m => m.Code, (m, v) => m.Code = v ?? 0),
+        new StringConvertHint<SubsonicError>("message", m => m.Message, (m, v) => m.Message = v),
+    ];
+
     /// <summary>The error code.</summary>
-    [XmlAttribute("code")]
     public int Code { get; set; }
 
     /// <summary>The optional error message.</summary>
-    [XmlAttribute("message")]
     public string? Message { get; set; }
 }
