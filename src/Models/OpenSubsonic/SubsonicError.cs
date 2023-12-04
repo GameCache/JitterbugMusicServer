@@ -8,12 +8,12 @@ public sealed class SubsonicError() : XmlHintSerializable<SubsonicError>(_Conver
 {
     /// <inheritdoc cref="XmlHintSerializable{T}.AttributeHints" path="/summary"/>
     private static readonly IEnumerable<IConvertHint<SubsonicError>> _ConvertAttributeHints = [
-        new IntConvertHint<SubsonicError>("code", m => m.Code, (m, v) => m.Code = v ?? 0),
+        new IntConvertHint<SubsonicError>("code", m => m.Code, (m, v) => m.Code = v),
         new StringConvertHint<SubsonicError>("message", m => m.Message, (m, v) => m.Message = v),
     ];
 
     /// <summary>The error code.</summary>
-    public int Code { get; set; }
+    public int? Code { get; set; }
 
     /// <summary>The optional error message.</summary>
     public string? Message { get; set; }

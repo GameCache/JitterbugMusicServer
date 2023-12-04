@@ -39,8 +39,8 @@ public class ProgramTests(WebApplicationFactory<Program> factory) : IClassFixtur
 
         using (XmlReader reader = XmlReader.Create(await response.Content.ReadAsStreamAsync().ConfigureAwait(false)))
         {
-            object? result = new XmlSerializer(typeof(SubsonicResponse<NoContentModel>)).Deserialize(reader);
-            (result as SubsonicResponse<NoContentModel>).Assert().IsNot(null);
+            object? result = new XmlSerializer(typeof(SubsonicDataResponse<NoContentDto>)).Deserialize(reader);
+            (result as SubsonicDataResponse<NoContentDto>).Assert().IsNot(null);
         }
     }
 
@@ -57,9 +57,9 @@ public class ProgramTests(WebApplicationFactory<Program> factory) : IClassFixtur
 
         object? result = JsonSerializer.Deserialize(
             await response.Content.ReadAsStringAsync().ConfigureAwait(false),
-            typeof(SubsonicResponse<NoContentModel>));
+            typeof(SubsonicDataResponse<NoContentDto>));
 
-        (result as SubsonicResponse<NoContentModel>).Assert().IsNot(null);
+        (result as SubsonicDataResponse<NoContentDto>).Assert().IsNot(null);
     }
 
     [Fact]
@@ -90,8 +90,8 @@ public class ProgramTests(WebApplicationFactory<Program> factory) : IClassFixtur
 
         using (XmlReader reader = XmlReader.Create(await response.Content.ReadAsStreamAsync().ConfigureAwait(false)))
         {
-            object? result = new XmlSerializer(typeof(SubsonicResponse<NoContentModel>)).Deserialize(reader);
-            (result as SubsonicResponse<NoContentModel>).Assert().IsNot(null);
+            object? result = new XmlSerializer(typeof(SubsonicDataResponse<NoContentDto>)).Deserialize(reader);
+            (result as SubsonicDataResponse<NoContentDto>).Assert().IsNot(null);
         }
     }
 

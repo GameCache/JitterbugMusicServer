@@ -12,21 +12,21 @@ namespace JitterbugMusic.Models.OpenSubsonic;
 
 /// <summary>Response with content from OpenSubsonic endpoints.</summary>
 [XmlRoot("subsonic-response", Namespace = "http://subsonic.org/restapi")]
-public class SubsonicResponse<T> : IXmlSerializable where T : SubsonicContent<T>, new()
+public class SubsonicSeriesResponse<T> : IXmlSerializable where T : SubsonicContent<T>, new()
 {
     /// <inheritdoc cref="XmlHintSerializable{T}.AttributeHints" path="/summary"/>
-    private static readonly IEnumerable<IConvertHint<SubsonicResponse<T>>> _ConvertAttributeHints = [
-        new StringConvertHint<SubsonicResponse<T>>("status", m => m.Status, (m, v) => m.Status = v),
-        new StringConvertHint<SubsonicResponse<T>>("version", m => m.Version, (m, v) => m.Version = v),
-        new StringConvertHint<SubsonicResponse<T>>("type", m => m.Type, (m, v) => m.Type = v),
-        new StringConvertHint<SubsonicResponse<T>>("serverVersion", m => m.ServerVersion, (m, v) => m.ServerVersion = v),
-        new BoolConvertHint<SubsonicResponse<T>>("openSubsonic", m => m.OpenSubsonic, (m, v) => m.OpenSubsonic = v)
+    private static readonly IEnumerable<IConvertHint<SubsonicSeriesResponse<T>>> _ConvertAttributeHints = [
+        new StringConvertHint<SubsonicSeriesResponse<T>>("status", m => m.Status, (m, v) => m.Status = v),
+        new StringConvertHint<SubsonicSeriesResponse<T>>("version", m => m.Version, (m, v) => m.Version = v),
+        new StringConvertHint<SubsonicSeriesResponse<T>>("type", m => m.Type, (m, v) => m.Type = v),
+        new StringConvertHint<SubsonicSeriesResponse<T>>("serverVersion", m => m.ServerVersion, (m, v) => m.ServerVersion = v),
+        new BoolConvertHint<SubsonicSeriesResponse<T>>("openSubsonic", m => m.OpenSubsonic, (m, v) => m.OpenSubsonic = v)
     ];
 
     /// <inheritdoc cref="XmlHintSerializable{T}.ElementHints" path="/summary"/>
-    private static readonly IEnumerable<IConvertHint<SubsonicResponse<T>>> _ConvertElementHints = [
-        new NestedConvertHint<SubsonicResponse<T>, T>(new T().ElementHintName, m => m.Content, (m, v) => m.Content = v),
-        new NestedConvertHint<SubsonicResponse<T>, SubsonicError>("error", m => m.Error, (m, v) => m.Error = v)
+    private static readonly IEnumerable<IConvertHint<SubsonicSeriesResponse<T>>> _ConvertElementHints = [
+        new NestedSeriesConvertHint<SubsonicSeriesResponse<T>, T>(new T().GroupingHintName, new T().ElementHintName, m => m.Contents, (m, v) => m.Contents = v),
+        new NestedConvertHint<SubsonicSeriesResponse<T>, SubsonicError>("error", m => m.Error, (m, v) => m.Error = v)
     ];
 
     /// <summary>Handles json conversion.</summary>
@@ -39,7 +39,7 @@ public class SubsonicResponse<T> : IXmlSerializable where T : SubsonicContent<T>
                 .ToDictionary(h => h.Name, h => h.GetValueForJson(this));
         set
         {
-            foreach (IConvertHint<SubsonicResponse<T>> hint in _ConvertElementHints.Concat(_ConvertAttributeHints))
+            foreach (IConvertHint<SubsonicSeriesResponse<T>> hint in _ConvertElementHints.Concat(_ConvertAttributeHints))
             {
                 if (value?.TryGetValue(hint.Name, out dynamic? item) ?? false)
                 {
@@ -79,7 +79,7 @@ public class SubsonicResponse<T> : IXmlSerializable where T : SubsonicContent<T>
 
     /// <summary>Data result of the endpoint call.</summary>
     [JsonIgnore]
-    public T? Content { get; set; }
+    public IEnumerable<T>? Contents { get; set; }
 
     /// <inheritdoc/>
     public void ReadXml(XmlReader reader)

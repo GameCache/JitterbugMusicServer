@@ -14,9 +14,9 @@ namespace JitterbugMusic.ModelsTests.Conversion.Nested;
 
 public sealed class NestedConvertHintTests : IXmlSerializable
 {
-    public LicenseModel? Element { get; set; }
+    public LicenseDto? Element { get; set; }
 
-    private static NestedConvertHint<NestedConvertHintTests, LicenseModel> ElementHint
+    private static NestedConvertHint<NestedConvertHintTests, LicenseDto> ElementHint
         => new("element", m => m.Element, (m, v) => m.Element = v);
 
     [Theory, RandomData]
@@ -48,7 +48,7 @@ public sealed class NestedConvertHintTests : IXmlSerializable
         NestedConvertHintTests original = new() { Element = default };
 
         dynamic? attributeValue = ElementHint.GetValueForJson(original);
-        ElementHint.SetValueForJson(dupe, JsonSerializer.SerializeToElement(attributeValue, typeof(LicenseModel)));
+        ElementHint.SetValueForJson(dupe, JsonSerializer.SerializeToElement(attributeValue, typeof(LicenseDto)));
 
         original.Element.Assert().Is(dupe.Element);
     }
@@ -64,7 +64,7 @@ public sealed class NestedConvertHintTests : IXmlSerializable
     [Fact]
     internal void PreventsAttribute()
     {
-        dynamic instance = new NestedConvertHint<NestedConvertHintTests, LicenseModel>(
+        dynamic instance = new NestedConvertHint<NestedConvertHintTests, LicenseDto>(
             "child", m => null, (m, v) => { });
         Tools.Asserter.Throws<InvalidOperationException>((Action)(() => instance.WriteAttribute(null, null)));
         Tools.Asserter.Throws<InvalidOperationException>((Action)(() => instance.ReadAttribute(null, null)));
@@ -73,7 +73,7 @@ public sealed class NestedConvertHintTests : IXmlSerializable
     [Fact]
     internal void GuardsNulls()
     {
-        dynamic instance = new NestedConvertHint<NestedConvertHintTests, LicenseModel>(
+        dynamic instance = new NestedConvertHint<NestedConvertHintTests, LicenseDto>(
             "child", m => null, (m, v) => { });
         Tools.Asserter.Throws<ArgumentNullException>((Action)(() => instance.WriteElement(null, null)));
         Tools.Asserter.Throws<ArgumentNullException>((Action)(() => instance.ReadElement(null, null)));

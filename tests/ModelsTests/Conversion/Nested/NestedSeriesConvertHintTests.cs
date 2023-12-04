@@ -17,14 +17,14 @@ namespace JitterbugMusic.ModelsTests.Conversion.Nested;
 
 public sealed class NestedSeriesConvertHintTests : IXmlSerializable
 {
-    public IEnumerable<LicenseModel>? SeriesA { get; set; }
+    public IEnumerable<LicenseDto>? SeriesA { get; set; }
 
-    public IEnumerable<LicenseModel>? SeriesB { get; set; }
+    public IEnumerable<LicenseDto>? SeriesB { get; set; }
 
-    private static NestedSeriesConvertHint<NestedSeriesConvertHintTests, LicenseModel> ElementAHint
+    private static NestedSeriesConvertHint<NestedSeriesConvertHintTests, LicenseDto> ElementAHint
         => new(null, "seriesA", m => m.SeriesA, (m, v) => m.SeriesA = v);
 
-    private static NestedSeriesConvertHint<NestedSeriesConvertHintTests, LicenseModel> ElementBHint
+    private static NestedSeriesConvertHint<NestedSeriesConvertHintTests, LicenseDto> ElementBHint
         => new("group", "seriesB", m => m.SeriesB, (m, v) => m.SeriesB = v);
 
     private static void FixModel(NestedSeriesConvertHintTests model)
@@ -67,7 +67,7 @@ public sealed class NestedSeriesConvertHintTests : IXmlSerializable
         NestedSeriesConvertHintTests original = new() { SeriesA = default };
 
         dynamic? attributeValue = ElementAHint.GetValueForJson(original);
-        ElementAHint.SetValueForJson(dupe, JsonSerializer.SerializeToElement(attributeValue, typeof(LicenseModel)));
+        ElementAHint.SetValueForJson(dupe, JsonSerializer.SerializeToElement(attributeValue, typeof(LicenseDto)));
 
         original.SeriesA.Assert().Is(dupe.SeriesA);
     }
@@ -83,7 +83,7 @@ public sealed class NestedSeriesConvertHintTests : IXmlSerializable
     [Fact]
     internal void PreventsAttribute()
     {
-        dynamic instance = new NestedSeriesConvertHint<NestedSeriesConvertHintTests, LicenseModel>(
+        dynamic instance = new NestedSeriesConvertHint<NestedSeriesConvertHintTests, LicenseDto>(
             "series", "item", m => null, (m, v) => { });
         Tools.Asserter.Throws<InvalidOperationException>((Action)(() => instance.WriteAttribute(null, null)));
         Tools.Asserter.Throws<InvalidOperationException>((Action)(() => instance.ReadAttribute(null, null)));
@@ -92,7 +92,7 @@ public sealed class NestedSeriesConvertHintTests : IXmlSerializable
     [Fact]
     internal void GuardsNulls()
     {
-        dynamic instance = new NestedSeriesConvertHint<NestedSeriesConvertHintTests, LicenseModel>(
+        dynamic instance = new NestedSeriesConvertHint<NestedSeriesConvertHintTests, LicenseDto>(
             "series", "item", m => null, (m, v) => { });
         Tools.Asserter.Throws<ArgumentNullException>((Action)(() => instance.WriteElement(null, null)));
         Tools.Asserter.Throws<ArgumentNullException>((Action)(() => instance.ReadElement(null, null)));

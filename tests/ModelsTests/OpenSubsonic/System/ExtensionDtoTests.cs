@@ -3,9 +3,9 @@ using JitterbugMusic.Models.OpenSubsonic.System;
 
 namespace JitterbugMusic.ModelsTests.OpenSubsonic.System;
 
-public class ExtensionModelTests : BaseSubsonicModelTests<ExtensionModel>
+public class ExtensionDtoTests : BaseSubsonicDtoTests<ExtensionDto>
 {
-    protected internal override ExtensionModel FixModel(ExtensionModel original)
+    protected internal override ExtensionDto FixModel(ExtensionDto original)
     {
         original.Versions = original.Versions.ToList();
         return original;

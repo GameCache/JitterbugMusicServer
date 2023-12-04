@@ -7,10 +7,10 @@ using Xunit;
 
 namespace JitterbugMusic.ModelsTests.OpenSubsonic;
 
-public class SubsonicResponseTests
+public class SubsonicDataResponseTests
 {
     [Theory, RandomData]
-    internal void RoundTripsViaJson(SubsonicResponse<LicenseModel> original)
+    internal void RoundTripsViaJson(SubsonicDataResponse<LicenseDto> original)
     {
         ConvertTester.JsonTrip(original);
     }
@@ -18,7 +18,7 @@ public class SubsonicResponseTests
     [Fact]
     internal virtual void RoundTripsDefaultsViaJson()
     {
-        SubsonicResponse<LicenseModel> original = new()
+        SubsonicDataResponse<LicenseDto> original = new()
         {
             Status = null,
             Version = null,
@@ -30,7 +30,7 @@ public class SubsonicResponseTests
     }
 
     [Theory, RandomData]
-    internal void RoundTripsViaXml(SubsonicResponse<LicenseModel> original)
+    internal void RoundTripsViaXml(SubsonicDataResponse<LicenseDto> original)
     {
         ConvertTester.XmlTrip(original);
     }
@@ -38,7 +38,7 @@ public class SubsonicResponseTests
     [Fact]
     internal virtual void RoundTripsDefaultsViaXml()
     {
-        SubsonicResponse<LicenseModel> original = new()
+        SubsonicDataResponse<LicenseDto> original = new()
         {
             Status = null,
             Version = null,
@@ -52,7 +52,7 @@ public class SubsonicResponseTests
     [Fact]
     internal virtual void NullDictViaJsonResets()
     {
-        SubsonicResponse<LicenseModel> original = new()
+        SubsonicDataResponse<LicenseDto> original = new()
         {
             Status = null,
             Version = null,
@@ -60,7 +60,7 @@ public class SubsonicResponseTests
             ServerVersion = null,
             OpenSubsonic = null
         };
-        SubsonicResponse<LicenseModel> dupe = new()
+        SubsonicDataResponse<LicenseDto> dupe = new()
         {
             JsonDataProvider = null
         };
@@ -69,7 +69,7 @@ public class SubsonicResponseTests
     }
 
     [Theory, RandomData]
-    internal virtual void GetSchema_IsNull(SubsonicResponse<LicenseModel> original)
+    internal virtual void GetSchema_IsNull(SubsonicDataResponse<LicenseDto> original)
     {
         original.GetSchema().Assert().Is(null);
     }

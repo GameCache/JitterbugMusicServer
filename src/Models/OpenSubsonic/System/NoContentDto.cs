@@ -1,4 +1,4 @@
 namespace JitterbugMusic.Models.OpenSubsonic.System;
 
 /// <summary>No content in the response.</summary>
-public sealed class NoContentModel() : SubsonicContent<NoContentModel>("", null, null) { }
+public sealed class NoContentDto() : SubsonicContent<NoContentDto>("", null, null) { }

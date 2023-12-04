@@ -21,9 +21,9 @@ public class XmlHintConverterTests
     [Fact]
     internal void FromXml_IgnoresRandomNodes()
     {
-        XmlSerializer serializer = new(typeof(LicenseModel));
+        XmlSerializer serializer = new(typeof(LicenseDto));
 
-        string xml = "<LicenseModel><a><b/></a><![CDATA[stuff]]><c/></LicenseModel>";
+        string xml = "<LicenseDto><a><b/></a><![CDATA[stuff]]><c/></LicenseDto>";
 
         using (StringReader text = new(xml))
         using (XmlReader reader = XmlReader.Create(text))

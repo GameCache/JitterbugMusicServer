@@ -2,4 +2,4 @@ using JitterbugMusic.Models.OpenSubsonic.System;
 
 namespace JitterbugMusic.ModelsTests.OpenSubsonic.System;
 
-public class NoContentModelTests : BaseSubsonicModelTests<NoContentModel> { }
+public class NoContentDtoTests : BaseSubsonicDtoTests<NoContentDto> { }

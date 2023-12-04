@@ -5,10 +5,10 @@ using Xunit;
 
 namespace JitterbugMusic.ModelsTests.OpenSubsonic.System;
 
-public class LicenseModelTests : BaseSubsonicModelTests<LicenseModel>
+public class LicenseDtoTests : BaseSubsonicDtoTests<LicenseDto>
 {
     [Theory, RandomData]
-    internal void GetSchema_IsNull(LicenseModel model)
+    internal void GetSchema_IsNull(LicenseDto model)
     {
         model.GetSchema().Assert().Is(null);
     }

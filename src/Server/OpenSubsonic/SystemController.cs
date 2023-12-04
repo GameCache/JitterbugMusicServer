@@ -12,22 +12,22 @@ public sealed class SystemController : ControllerBase
 {
     /// <summary>Used to test connectivity with the server.</summary>
     /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
-    /// <returns><inheritdoc cref="NoContentModel" path="/summary"/></returns>
+    /// <returns><inheritdoc cref="NoContentDto" path="/summary"/></returns>
     [HttpGet("ping")]
-    public SubsonicResponse<NoContentModel> Ping([FromQuery] SubsonicRequest standard)
+    public SubsonicDataResponse<NoContentDto> Ping([FromQuery] SubsonicRequest standard)
     {
-        return new SubsonicResponse<NoContentModel>();
+        return new SubsonicDataResponse<NoContentDto>();
     }
 
     /// <summary>Get details about the software license.</summary>
     /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
-    /// <returns><inheritdoc cref="LicenseModel" path="/summary"/></returns>
+    /// <returns><inheritdoc cref="LicenseDto" path="/summary"/></returns>
     [HttpGet("getLicense")]
-    public SubsonicResponse<LicenseModel> GetLicense([FromQuery] SubsonicRequest standard)
+    public SubsonicDataResponse<LicenseDto> GetLicense([FromQuery] SubsonicRequest standard)
     {
-        return new SubsonicResponse<LicenseModel>()
+        return new SubsonicDataResponse<LicenseDto>()
         {
-            Content = new LicenseModel()
+            Content = new LicenseDto()
             {
                 Email = "demo@demo.org",
                 LicenseExpires = DateTime.UtcNow.AddYears(1),
@@ -43,19 +43,16 @@ public sealed class SystemController : ControllerBase
 
     /// <summary>List the OpenSubsonic extensions supported by this server.</summary>
     /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
-    /// <returns><inheritdoc cref="ExtensionsModel" path="/summary"/></returns>
+    /// <returns><inheritdoc cref="ExtensionDto" path="/summary"/></returns>
     [HttpGet("getOpenSubsonicExtensions")]
-    public SubsonicResponse<ExtensionsModel> GetSupportedExtensions([FromQuery] SubsonicRequest standard)
+    public SubsonicSeriesResponse<ExtensionDto> GetSupportedExtensions([FromQuery] SubsonicRequest standard)
     {
-        return new SubsonicResponse<ExtensionsModel>()
+        return new SubsonicSeriesResponse<ExtensionDto>()
         {
-            Content = new ExtensionsModel()
+            Contents = new[]
             {
-                OpenSubsonicExtensions = new[]
-                {
-                    new ExtensionModel() { Name = "template", Versions = new [] { 1, 2 } },
-                    new ExtensionModel() { Name = "transcodeOffset", Versions = new[] { 1 } }
-                }
+                new ExtensionDto() { Name = "template", Versions = new [] { 1, 2 } },
+                new ExtensionDto() { Name = "transcodeOffset", Versions = new[] { 1 } }
             }
         };
     }

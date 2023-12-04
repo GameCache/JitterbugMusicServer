@@ -6,7 +6,7 @@ using Xunit;
 
 namespace JitterbugMusic.ModelsTests.OpenSubsonic;
 
-public abstract class BaseSubsonicModelTests<T> where T : new()
+public abstract class BaseSubsonicDtoTests<T> where T : new()
 {
     protected internal virtual T FixModel(T original)
     {
