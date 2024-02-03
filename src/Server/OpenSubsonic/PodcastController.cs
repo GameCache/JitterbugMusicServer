@@ -11,10 +11,10 @@ namespace JitterbugMusic.Server.OpenSubsonic;
 public sealed class PodcastController : ControllerBase
 {
     /// <summary>A subsonic-response element with a nested musicFolders element on success.</summary>
-    /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
+    /// <param name="options"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
     /// <returns><inheritdoc cref="PodcastDto" path="/summary"/></returns>
     [HttpGet("getPodcasts")]
-    public SubsonicSeriesResponse<PodcastDto> GetPodcasts([FromQuery] SubsonicRequest standard)
+    public SubsonicSeriesResponse<PodcastDto> GetPodcasts([FromQuery] SubsonicRequest options)
     {
         return new SubsonicSeriesResponse<PodcastDto>()
         {
@@ -22,11 +22,11 @@ public sealed class PodcastController : ControllerBase
             {
                 new PodcastDto() {
                     Id = "1",
-                    Url = "http://downloads.bbc.co.uk/podcasts/fivelive/drkarl/rss.xml",
+                    Url = new Uri("http://downloads.bbc.co.uk/podcasts/fivelive/drkarl/rss.xml"),
                     Title = "Dr Karl and the Naked Scientist",
                     Description = "Dr Chris Smith aka The Naked Scientist with the latest news from the world of science and Dr Karl answers listeners' science questions.",
                     CoverArt = "pod-1",
-                    OriginalImageUrl = "http://downloads.bbc.co.uk/podcasts/fivelive/drkarl/drkarl.jpg",
+                    OriginalImageUrl = new Uri("http://downloads.bbc.co.uk/podcasts/fivelive/drkarl/drkarl.jpg"),
                     Status = "completed",
                     Episodes = new[]
                     {
@@ -73,15 +73,15 @@ public sealed class PodcastController : ControllerBase
                     }
                 }, new PodcastDto() {
                     Id = "2",
-                    Url = "http://podkast.nrk.no/program/herreavdelingen.rss",
+                    Url = new Uri("http://podkast.nrk.no/program/herreavdelingen.rss"),
                     Title = "NRK P1 - Herreavdelingen",
                     Description = "Et program der herrene Yan Friis og Finn Bjelke møtes og musikk nytes.",
                     CoverArt = "pod-2",
-                    OriginalImageUrl = "http://gfx.nrk.no/oP_mZkqyrOkZiAOilZPvFA1nlzIxOYVV9yq7P_J-ngjw.jpg",
+                    OriginalImageUrl = new Uri("http://gfx.nrk.no/oP_mZkqyrOkZiAOilZPvFA1nlzIxOYVV9yq7P_J-ngjw.jpg"),
                     Status = "completed"
                 }, new PodcastDto() {
                     Id = "3",
-                    Url = "http://foo.bar.com/xyz.rss",
+                    Url = new Uri("http://foo.bar.com/xyz.rss"),
                     Status = "error",
                     ErrorMessage = "Not found."
                 }

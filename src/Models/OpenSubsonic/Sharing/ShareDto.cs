@@ -10,7 +10,7 @@ public sealed class ShareDto() : SubsonicContent<ShareDto>(
     /// <inheritdoc cref="XmlHintSerializable{T}.AttributeHints" path="/summary"/>
     private static readonly IEnumerable<IConvertHint<ShareDto>> _ConvertAttributeHints = [
         new StringConvertHint<ShareDto>("id", m => m.Id, (m, v) => m.Id = v),
-        new StringConvertHint<ShareDto>("url", m => m.Url, (m, v) => m.Url = v),
+        new UriConvertHint<ShareDto>("url", m => m.Url, (m, v) => m.Url = v),
         new StringConvertHint<ShareDto>("description", m => m.Description, (m, v) => m.Description = v),
         new StringConvertHint<ShareDto>("username", m => m.Username, (m, v) => m.Username = v),
         new DateTimeConvertHint<ShareDto>("created", m => m.Created, (m, v) => m.Created = v),
@@ -23,7 +23,7 @@ public sealed class ShareDto() : SubsonicContent<ShareDto>(
     public string? Id { get; set; }
 
     /// <summary>The share url.</summary>
-    public string? Url { get; set; }
+    public Uri? Url { get; set; }
 
     /// <summary>A description.</summary>
     public string? Description { get; set; }

@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using System.Xml;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Primitives;
@@ -22,7 +23,8 @@ internal sealed class SubsonicOutputFormatter : TextOutputFormatter
     private static readonly SystemTextJsonOutputFormatter _JsonFormatter = new(new JsonSerializerOptions
     {
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        TypeInfoResolver = new DefaultJsonTypeInfoResolver()
     });
 
     /// <inheritdoc cref="SubsonicOutputFormatter"/>
@@ -39,7 +41,6 @@ internal sealed class SubsonicOutputFormatter : TextOutputFormatter
     protected override bool CanWriteType(Type? type)
     {
         return true;
-        //return typeof(SubsonicResponse<>).IsAssignableFrom(type);
     }
 
     /// <inheritdoc/>

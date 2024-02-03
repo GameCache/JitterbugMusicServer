@@ -44,7 +44,7 @@ public class NestedConvertHint<T, TData>(string name, Func<T, TData?> getter, Ac
     /// <inheritdoc/>
     public void WriteElement(XmlWriter? writer, T instance)
     {
-        if (writer == null) throw new ArgumentNullException(nameof(writer));
+        ArgumentNullException.ThrowIfNull(writer);
 
         TData? value = getter.Invoke(instance);
         if (value != null)
@@ -58,7 +58,7 @@ public class NestedConvertHint<T, TData>(string name, Func<T, TData?> getter, Ac
     /// <inheritdoc/>
     public void ReadElement(XmlReader? reader, T instance)
     {
-        if (reader == null) throw new ArgumentNullException(nameof(reader));
+        ArgumentNullException.ThrowIfNull(reader);
 
         TData value = new();
         value.ReadXml(reader);

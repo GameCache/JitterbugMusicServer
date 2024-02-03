@@ -41,7 +41,7 @@ public static class XmlHintConverter
     public static void FromXml<T>(XmlReader? reader, T instance,
         IEnumerable<IConvertHint<T>>? attributeHints, IEnumerable<IConvertHint<T>>? elementHints)
     {
-        if (reader == null) throw new ArgumentNullException(nameof(reader));
+        ArgumentNullException.ThrowIfNull(reader);
         if (attributeHints != null)
         {
             foreach (IConvertHint<T> hint in attributeHints)
@@ -50,7 +50,7 @@ public static class XmlHintConverter
             }
         }
 
-        IDictionary<string, IConvertHint<T>> elements
+        Dictionary<string, IConvertHint<T>> elements
             = (elementHints ?? Array.Empty<IConvertHint<T>>())
             .ToDictionary(h => h.Name, h => h);
 

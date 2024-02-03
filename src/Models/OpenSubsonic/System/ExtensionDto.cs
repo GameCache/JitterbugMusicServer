@@ -1,6 +1,7 @@
 using JitterbugMusic.Models.Conversion;
 using JitterbugMusic.Models.Conversion.Simple;
 using JitterbugMusic.Models.Conversion.Series;
+using System.ComponentModel.DataAnnotations;
 
 namespace JitterbugMusic.Models.OpenSubsonic.System;
 
@@ -19,8 +20,10 @@ public sealed class ExtensionDto() : SubsonicContent<ExtensionDto>(
     ];
 
     /// <summary>Name of the extension.</summary>
+    [Required]
     public string? Name { get; set; }
 
     /// <summary>Supported versions of the extension.</summary>
+    [Required]
     public IEnumerable<int>? Versions { get; set; }
 }

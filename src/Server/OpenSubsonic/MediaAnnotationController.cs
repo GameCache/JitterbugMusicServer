@@ -11,10 +11,10 @@ namespace JitterbugMusic.Server.OpenSubsonic;
 public sealed class MediaAnnotationController : ControllerBase
 {
     /// <summary>A subsonic-response element with a nested musicFolders element on success.</summary>
-    /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
+    /// <param name="options"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
     /// <returns><inheritdoc cref="NoContentDto" path="/summary"/></returns>
     [HttpPut("star")]
-    public SubsonicDataResponse<NoContentDto> PutStar([FromQuery] SubsonicRequest standard)
+    public SubsonicDataResponse<NoContentDto> PutStar([FromQuery] SubsonicRequest options)
     {
         return new SubsonicDataResponse<NoContentDto>();
     }

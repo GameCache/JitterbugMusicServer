@@ -32,8 +32,10 @@ public sealed class EpisodeDto() : SubsonicContent<EpisodeDto>(
     /// <summary>The lyrics</summary>
     public string? Id { get; set; }
 
+    /// <summary></summary>
     public string? StreamId { get; set; }
 
+    /// <summary></summary>
     public string? ChannelId { get; set; }
 
     /// <summary>The song title</summary>
@@ -42,29 +44,42 @@ public sealed class EpisodeDto() : SubsonicContent<EpisodeDto>(
     /// <summary>The song title</summary>
     public string? Description { get; set; }
 
+    /// <summary></summary>
     public DateTime? PublishDate { get; set; }
 
+    /// <summary></summary>
     public string? Status { get; set; }
 
+    /// <summary></summary>
     public string? Parent { get; set; }
 
+    /// <summary></summary>
     public bool? IsDir { get; set; }
 
+    /// <summary></summary>
     public int? Year { get; set; }
 
+    /// <summary></summary>
     public string? Genre { get; set; }
 
+    /// <summary></summary>
     public string? CoverArt { get; set; }
 
+    /// <summary></summary>
     public int? Size { get; set; }
 
+    /// <summary></summary>
     public string? ContentType { get; set; }
 
+    /// <summary></summary>
     public string? Suffix { get; set; }
 
+    /// <summary></summary>
     public int? Duration { get; set; }
 
+    /// <summary></summary>
     public int? BitRate { get; set; }
 
+    /// <summary></summary>
     public string? Path { get; set; }
 }

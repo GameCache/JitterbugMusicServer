@@ -2,7 +2,8 @@
 
 [![Build](https://github.com/GameCache/JitterbugMusicServer/workflows/Integration/badge.svg)](../../actions?query=workflow%3AIntegration) [![CodeCov Coverage](https://codecov.io/gh/GameCache/JitterbugMusicServer/branch/main/graph/badge.svg)](https://codecov.io/gh/GameCache/JitterbugMusicServer/branch/main)
 
-dotnet run --launch-profile https
+dotnet run --project src/Server --launch-profile https
+/swagger
 
 Quick template to start C# projects with. View the [documentation site](https://gamecache.github.io/JitterbugMusicServer/) for instructions and more.
 

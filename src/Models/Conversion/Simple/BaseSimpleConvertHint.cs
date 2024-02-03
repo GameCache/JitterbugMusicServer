@@ -47,7 +47,7 @@ public abstract class BaseSimpleConvertHint<T, TData>(string name, Func<T, TData
     /// <inheritdoc/>
     public void WriteAttribute(XmlWriter? writer, T instance)
     {
-        if (writer == null) throw new ArgumentNullException(nameof(writer));
+        ArgumentNullException.ThrowIfNull(writer);
 
         string? value = ConvertToString(getter.Invoke(instance));
         if (value != null)
@@ -59,7 +59,7 @@ public abstract class BaseSimpleConvertHint<T, TData>(string name, Func<T, TData
     /// <inheritdoc/>
     public void ReadAttribute(XmlReader? reader, T instance)
     {
-        if (reader == null) throw new ArgumentNullException(nameof(reader));
+        ArgumentNullException.ThrowIfNull(reader);
 
         setter.Invoke(instance, ConvertToData(reader.GetAttribute(Name)));
     }
@@ -67,7 +67,7 @@ public abstract class BaseSimpleConvertHint<T, TData>(string name, Func<T, TData
     /// <inheritdoc/>
     public void WriteElement(XmlWriter? writer, T instance)
     {
-        if (writer == null) throw new ArgumentNullException(nameof(writer));
+        ArgumentNullException.ThrowIfNull(writer);
 
         string? value = ConvertToString(getter.Invoke(instance));
         if (value != null)
@@ -79,7 +79,7 @@ public abstract class BaseSimpleConvertHint<T, TData>(string name, Func<T, TData
     /// <inheritdoc/>
     public void ReadElement(XmlReader? reader, T instance)
     {
-        if (reader == null) throw new ArgumentNullException(nameof(reader));
+        ArgumentNullException.ThrowIfNull(reader);
 
         setter.Invoke(instance, ConvertToData(reader.ReadElementContentAsString()));
     }

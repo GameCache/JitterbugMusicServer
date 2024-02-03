@@ -11,19 +11,19 @@ namespace JitterbugMusic.Server.OpenSubsonic;
 public sealed class SystemController : ControllerBase
 {
     /// <summary>Used to test connectivity with the server.</summary>
-    /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
+    /// <param name="options"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
     /// <returns><inheritdoc cref="NoContentDto" path="/summary"/></returns>
     [HttpGet("ping")]
-    public SubsonicDataResponse<NoContentDto> Ping([FromQuery] SubsonicRequest standard)
+    public SubsonicDataResponse<NoContentDto> Ping([FromQuery] SubsonicRequest options)
     {
         return new SubsonicDataResponse<NoContentDto>();
     }
 
     /// <summary>Get details about the software license.</summary>
-    /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
+    /// <param name="options"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
     /// <returns><inheritdoc cref="LicenseDto" path="/summary"/></returns>
     [HttpGet("getLicense")]
-    public SubsonicDataResponse<LicenseDto> GetLicense([FromQuery] SubsonicRequest standard)
+    public SubsonicDataResponse<LicenseDto> GetLicense([FromQuery] SubsonicRequest options)
     {
         return new SubsonicDataResponse<LicenseDto>()
         {
@@ -42,10 +42,10 @@ public sealed class SystemController : ControllerBase
     }
 
     /// <summary>List the OpenSubsonic extensions supported by this server.</summary>
-    /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
+    /// <param name="options"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
     /// <returns><inheritdoc cref="ExtensionDto" path="/summary"/></returns>
     [HttpGet("getOpenSubsonicExtensions")]
-    public SubsonicSeriesResponse<ExtensionDto> GetSupportedExtensions([FromQuery] SubsonicRequest standard)
+    public SubsonicSeriesResponse<ExtensionDto> GetSupportedExtensions([FromQuery] SubsonicRequest options)
     {
         return new SubsonicSeriesResponse<ExtensionDto>()
         {

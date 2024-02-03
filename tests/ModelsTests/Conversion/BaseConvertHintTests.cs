@@ -22,15 +22,9 @@ public abstract class BaseConvertHintTests<T, TData> : IXmlSerializable where T 
 
     protected IConvertHint<T> ElementHint => CreateHint("element", m => m.Element, (m, v) => m.Element = v);
 
-    protected virtual TData FixModel(TData original)
-    {
-        return original;
-    }
-
     [Theory, RandomData]
-    internal void RoundTripsViaXml(TData attribute, TData element)
+    internal void RoundTripsViaXml(T original)
     {
-        T original = new() { Attribute = FixModel(attribute), Element = FixModel(element) };
         ConvertTester.XmlTrip(original);
     }
 
@@ -43,7 +37,7 @@ public abstract class BaseConvertHintTests<T, TData> : IXmlSerializable where T 
     [Theory, RandomData]
     internal void RoundTripsViaJson(TData attribute)
     {
-        T original = new() { Attribute = FixModel(attribute) };
+        T original = new() { Attribute = attribute };
         T dupe = new();
 
         dynamic? attributeValue = AttributeHint.GetValueForJson(original);
@@ -56,7 +50,7 @@ public abstract class BaseConvertHintTests<T, TData> : IXmlSerializable where T 
     internal void RoundTripsUsingDefaultsViaJson(TData attribute)
     {
         T original = new() { Attribute = default };
-        T dupe = new() { Attribute = FixModel(attribute) };
+        T dupe = new() { Attribute = attribute };
 
         dynamic? attributeValue = AttributeHint.GetValueForJson(original);
         AttributeHint.SetValueForJson(dupe, JsonSerializer.SerializeToElement(attributeValue, typeof(TData)));
@@ -67,7 +61,7 @@ public abstract class BaseConvertHintTests<T, TData> : IXmlSerializable where T 
     [Theory, RandomData]
     internal virtual void ResetToDefault_Works(TData attribute)
     {
-        T original = new() { Attribute = FixModel(attribute) };
+        T original = new() { Attribute = attribute };
 
         AttributeHint.ResetToDefault(original);
 

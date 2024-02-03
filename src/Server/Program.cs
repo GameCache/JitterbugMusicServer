@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
     // Add services to the container.
     _ = builder.Services.AddControllers(options =>
     {
-        while (options.OutputFormatters.Any())
+        while (options.OutputFormatters.Count > 0)
         {
             options.OutputFormatters.RemoveAt(0);
         }

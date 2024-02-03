@@ -15,7 +15,7 @@ public abstract class BaseSeriesConvertHint<T, TData>(string? seriesName, string
     : ISeriesConvertHint<T>
 {
     /// <summary>Currently read XML elements.</summary>
-    private IList<TData>? _recording = null;
+    private List<TData>? _recording = null;
 
     /// <inheritdoc/>
     public string Name { get; } = seriesName ?? itemName;
@@ -45,7 +45,7 @@ public abstract class BaseSeriesConvertHint<T, TData>(string? seriesName, string
     /// <inheritdoc/>
     public void WriteAttribute(XmlWriter? writer, T instance)
     {
-        if (writer == null) throw new ArgumentNullException(nameof(writer));
+        ArgumentNullException.ThrowIfNull(writer);
 
         IEnumerable<TData>? values = getter.Invoke(instance);
         if (values != null)
@@ -57,7 +57,7 @@ public abstract class BaseSeriesConvertHint<T, TData>(string? seriesName, string
     /// <inheritdoc/>
     public void ReadAttribute(XmlReader? reader, T instance)
     {
-        if (reader == null) throw new ArgumentNullException(nameof(reader));
+        ArgumentNullException.ThrowIfNull(reader);
 
         setter.Invoke(instance, reader
             .GetAttribute(Name)
@@ -69,25 +69,25 @@ public abstract class BaseSeriesConvertHint<T, TData>(string? seriesName, string
     /// <inheritdoc/>
     public void WriteElement(XmlWriter? writer, T instance)
     {
-        if (writer == null) throw new ArgumentNullException(nameof(writer));
-
-        if (seriesName != null)
-        {
-            writer.WriteStartElement(seriesName);
-        }
+        ArgumentNullException.ThrowIfNull(writer);
 
         IEnumerable<TData>? values = getter.Invoke(instance);
         if (values != null)
         {
+            if (seriesName != null)
+            {
+                writer.WriteStartElement(seriesName);
+            }
+
             foreach (TData value in values)
             {
                 writer.WriteElementString(itemName, ConvertToString(value));
             }
-        }
 
-        if (seriesName != null)
-        {
-            writer.WriteEndElement();
+            if (seriesName != null)
+            {
+                writer.WriteEndElement();
+            }
         }
     }
 
@@ -95,7 +95,7 @@ public abstract class BaseSeriesConvertHint<T, TData>(string? seriesName, string
     /// <remarks>Begins recording items for the collection.</remarks>
     public void ReadElement(XmlReader? reader, T instance)
     {
-        if (reader == null) throw new ArgumentNullException(nameof(reader));
+        ArgumentNullException.ThrowIfNull(reader);
 
         if (seriesName != null)
         {
@@ -103,7 +103,7 @@ public abstract class BaseSeriesConvertHint<T, TData>(string? seriesName, string
         }
         else
         {
-            _recording ??= new List<TData>();
+            _recording ??= [];
             _recording.Add(ConvertToData(reader.ReadElementContentAsString()));
         }
     }
@@ -111,6 +111,8 @@ public abstract class BaseSeriesConvertHint<T, TData>(string? seriesName, string
     /// <inheritdoc cref="ReadElement"/>
     private void ReadCollection(XmlReader reader)
     {
+        _recording ??= [];
+
         if (reader.IsEmptyElement)
         {
             reader.ReadStartElement();
@@ -124,7 +126,6 @@ public abstract class BaseSeriesConvertHint<T, TData>(string? seriesName, string
                 {
                     if (reader.Name == itemName)
                     {
-                        _recording ??= new List<TData>();
                         _recording.Add(ConvertToData(reader.ReadElementContentAsString()));
                     }
                     else

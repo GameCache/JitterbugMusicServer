@@ -77,9 +77,16 @@ public class SubsonicSeriesResponse<T> : IXmlSerializable where T : SubsonicCont
     [JsonIgnore]
     public SubsonicError? Error { get; set; }
 
+    /// <inheritdoc cref="Contents"/>
+    private T[]? _contents;
+
     /// <summary>Data result of the endpoint call.</summary>
     [JsonIgnore]
-    public IEnumerable<T>? Contents { get; set; }
+    public IEnumerable<T>? Contents
+    {
+        get => _contents;
+        set => _contents = value?.ToArray();
+    }
 
     /// <inheritdoc/>
     public void ReadXml(XmlReader reader)

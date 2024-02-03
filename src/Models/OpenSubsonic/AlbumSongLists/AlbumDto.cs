@@ -26,33 +26,48 @@ public sealed class AlbumDto() : SubsonicContent<AlbumDto>(
         new StringConvertHint<AlbumDto>("genre", m => m.Genre, (m, v) => m.Genre = v)
     ];
 
+    /// <summary></summary>
     public string? Id { get; set; }
 
+    /// <summary></summary>
     public string? Parent { get; set; }
 
+    /// <summary></summary>
     public string? Album { get; set; }
 
+    /// <summary></summary>
     public string? Title { get; set; }
 
+    /// <summary></summary>
     public string? Name { get; set; }
 
+    /// <summary></summary>
     public bool? IsDir { get; set; }
 
+    /// <summary></summary>
     public string? CoverArt { get; set; }
 
+    /// <summary></summary>
     public int? SongCount { get; set; }
 
+    /// <summary></summary>
     public DateTime? Created { get; set; }
 
+    /// <summary></summary>
     public int? Duration { get; set; }
 
+    /// <summary></summary>
     public int? PlayCount { get; set; }
 
+    /// <summary></summary>
     public string? ArtistId { get; set; }
 
+    /// <summary></summary>
     public string? Artist { get; set; }
 
+    /// <summary></summary>
     public int? Year { get; set; }
 
+    /// <summary></summary>
     public string? Genre { get; set; }
 }

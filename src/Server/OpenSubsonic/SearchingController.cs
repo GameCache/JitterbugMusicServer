@@ -11,10 +11,10 @@ namespace JitterbugMusic.Server.OpenSubsonic;
 public sealed class SearchingController : ControllerBase
 {
     /// <summary>A subsonic-response element with a nested musicFolders element on success.</summary>
-    /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
+    /// <param name="options"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
     /// <returns><inheritdoc cref="SearchResultDto" path="/summary"/></returns>
     [HttpGet("search")]
-    public SubsonicSeriesResponse<SearchResultDto> Search([FromQuery] SubsonicRequest standard)
+    public SubsonicSeriesResponse<SearchResultDto> Search([FromQuery] SubsonicRequest options)
     {
         return new SubsonicSeriesResponse<SearchResultDto>()
         {

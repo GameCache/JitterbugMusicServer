@@ -11,10 +11,10 @@ namespace JitterbugMusic.Server.OpenSubsonic;
 public sealed class SharingController : ControllerBase
 {
     /// <summary>A subsonic-response element with a nested musicFolders element on success.</summary>
-    /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
+    /// <param name="options"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
     /// <returns><inheritdoc cref="ShareDto" path="/summary"/></returns>
     [HttpGet("getShares")]
-    public SubsonicSeriesResponse<ShareDto> GetShares([FromQuery] SubsonicRequest standard)
+    public SubsonicSeriesResponse<ShareDto> GetShares([FromQuery] SubsonicRequest options)
     {
         return new SubsonicSeriesResponse<ShareDto>()
         {
@@ -22,7 +22,7 @@ public sealed class SharingController : ControllerBase
             {
                 new ShareDto() {
                     Id = "12",
-                    Url= "http://localhost:8989/share.php?id=12&secret=fXlKyEv3",
+                    Url= new Uri("http://localhost:8989/share.php?id=12&secret=fXlKyEv3"),
                     Description= "Forget and Remember (Comfort Fit)",
                     Username= "user",
                     Created= DateTime.UtcNow,

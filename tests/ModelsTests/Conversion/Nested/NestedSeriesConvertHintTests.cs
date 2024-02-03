@@ -10,7 +10,6 @@ using JitterbugMusic.Models.Conversion;
 using System.Text.Json;
 using CreateAndFake.Fluent;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 
 namespace JitterbugMusic.ModelsTests.Conversion.Nested;
@@ -27,16 +26,9 @@ public sealed class NestedSeriesConvertHintTests : IXmlSerializable
     private static NestedSeriesConvertHint<NestedSeriesConvertHintTests, LicenseDto> ElementBHint
         => new("group", "seriesB", m => m.SeriesB, (m, v) => m.SeriesB = v);
 
-    private static void FixModel(NestedSeriesConvertHintTests model)
-    {
-        model.SeriesA = model.SeriesA.ToList();
-        model.SeriesB = model.SeriesB.ToList();
-    }
-
     [Theory, RandomData]
     internal void RoundTripsViaXml(NestedSeriesConvertHintTests original)
     {
-        FixModel(original);
         ConvertTester.XmlTrip(original);
     }
 
@@ -49,7 +41,6 @@ public sealed class NestedSeriesConvertHintTests : IXmlSerializable
     [Theory, RandomData]
     internal void RoundTripsViaJson(NestedSeriesConvertHintTests original)
     {
-        FixModel(original);
         NestedSeriesConvertHintTests dupe = new();
 
         dynamic? elementAValue = ElementAHint.GetValueForJson(original);
@@ -63,7 +54,6 @@ public sealed class NestedSeriesConvertHintTests : IXmlSerializable
     [Theory, RandomData]
     internal void RoundTripsUsingDefaultsViaJson(NestedSeriesConvertHintTests dupe)
     {
-        FixModel(dupe);
         NestedSeriesConvertHintTests original = new() { SeriesA = default };
 
         dynamic? attributeValue = ElementAHint.GetValueForJson(original);

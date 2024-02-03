@@ -11,10 +11,10 @@ namespace JitterbugMusic.Server.OpenSubsonic;
 public sealed class AlbumSongListsController : ControllerBase
 {
     /// <summary>A subsonic-response element with a nested musicFolders element on success.</summary>
-    /// <param name="standard"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
+    /// <param name="options"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
     /// <returns><inheritdoc cref="AlbumDto" path="/summary"/></returns>
     [HttpGet("getAlbumList")]
-    public SubsonicSeriesResponse<AlbumDto> GetAlbumList([FromQuery] SubsonicRequest standard)
+    public SubsonicSeriesResponse<AlbumDto> GetAlbumList([FromQuery] SubsonicRequest options)
     {
         return new SubsonicSeriesResponse<AlbumDto>()
         {

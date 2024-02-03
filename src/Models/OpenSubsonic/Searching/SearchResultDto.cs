@@ -27,35 +27,51 @@ public sealed class SearchResultDto() : SubsonicContent<SearchResultDto>(
         new StringConvertHint<SearchResultDto>("path", m => m.Path, (m, v) => m.Path = v)
     ];
 
+    /// <summary></summary>
     public string? Id { get; set; }
 
+    /// <summary></summary>
     public string? Parent { get; set; }
 
+    /// <summary></summary>
     public string? Title { get; set; }
 
+    /// <summary></summary>
     public bool? IsDir { get; set; }
 
+    /// <summary></summary>
     public string? Album { get; set; }
 
+    /// <summary></summary>
     public string? Artist { get; set; }
 
+    /// <summary></summary>
     public int? Track { get; set; }
 
+    /// <summary></summary>
     public int? Year { get; set; }
 
+    /// <summary></summary>
     public string? Genre { get; set; }
 
+    /// <summary></summary>
     public string? CoverArt { get; set; }
 
+    /// <summary></summary>
     public int? Size { get; set; }
 
+    /// <summary></summary>
     public string? ContentType { get; set; }
 
+    /// <summary></summary>
     public string? Suffix { get; set; }
 
+    /// <summary></summary>
     public string? TranscodedContentType { get; set; }
 
+    /// <summary></summary>
     public string? TranscodedSuffix { get; set; }
 
+    /// <summary></summary>
     public string? Path { get; set; }
 }

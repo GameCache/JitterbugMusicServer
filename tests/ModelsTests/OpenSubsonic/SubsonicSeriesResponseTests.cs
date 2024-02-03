@@ -1,10 +1,8 @@
-using System.Linq;
 using CreateAndFake;
 using CreateAndFake.Fluent;
 using JitterbugMusic.Models.OpenSubsonic;
 using JitterbugMusic.Models.OpenSubsonic.System;
 using JitterbugMusic.ModelsTests.Conversion;
-using JitterbugMusic.ModelsTests.OpenSubsonic.System;
 using Xunit;
 
 namespace JitterbugMusic.ModelsTests.OpenSubsonic;
@@ -14,7 +12,6 @@ public class SubsonicSeriesResponseTests
     [Theory, RandomData]
     internal void RoundTripsViaJson(SubsonicSeriesResponse<ExtensionDto> original)
     {
-        original.Contents = original.Contents.Select(c => new ExtensionDtoTests().FixModel(c)).ToList();
         ConvertTester.JsonTrip(original);
     }
 
@@ -35,7 +32,6 @@ public class SubsonicSeriesResponseTests
     [Theory, RandomData]
     internal void RoundTripsViaXml(SubsonicSeriesResponse<ExtensionDto> original)
     {
-        original.Contents = original.Contents.Select(c => new ExtensionDtoTests().FixModel(c)).ToList();
         ConvertTester.XmlTrip(original);
     }
 

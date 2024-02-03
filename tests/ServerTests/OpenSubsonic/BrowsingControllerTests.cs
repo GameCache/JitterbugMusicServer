@@ -12,4 +12,16 @@ public class BrowsingControllerTests
     {
         new BrowsingController().GetMusicFolders(request).Assert().IsNot(null);
     }
+
+    [Theory, RandomData]
+    public void GetIndexes_Works(SubsonicRequest request, string musicFolderId, long ifModifiedSince)
+    {
+        new BrowsingController().GetIndexes(request, musicFolderId, ifModifiedSince).Assert().IsNot(null);
+    }
+
+    [Theory, RandomData]
+    public void GetMusicDirectory_Works(SubsonicRequest request, string id)
+    {
+        new BrowsingController().GetMusicDirectory(request, id).Assert().IsNot(null);
+    }
 }

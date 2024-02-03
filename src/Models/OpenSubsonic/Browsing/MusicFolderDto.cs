@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using JitterbugMusic.Models.Conversion;
 using JitterbugMusic.Models.Conversion.Simple;
 
@@ -14,6 +15,7 @@ public sealed class MusicFolderDto() : SubsonicContent<MusicFolderDto>(
     ];
 
     /// <summary>The id</summary>
+    [Required]
     public string? Id { get; set; }
 
     /// <summary>The folder name</summary>

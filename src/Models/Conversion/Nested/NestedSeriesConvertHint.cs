@@ -16,7 +16,7 @@ public class NestedSeriesConvertHint<T, TData>(string? seriesName, string itemNa
     : ISeriesConvertHint<T> where TData : IXmlSerializable, new()
 {
     /// <summary>Currently read XML elements.</summary>
-    private IList<TData>? _recording = null;
+    private List<TData>? _recording = null;
 
     /// <inheritdoc/>
     public string Name { get; } = seriesName ?? itemName;
@@ -50,27 +50,27 @@ public class NestedSeriesConvertHint<T, TData>(string? seriesName, string itemNa
     /// <inheritdoc/>
     public void WriteElement(XmlWriter? writer, T instance)
     {
-        if (writer == null) throw new ArgumentNullException(nameof(writer));
-
-        if (seriesName != null)
-        {
-            writer.WriteStartElement(seriesName);
-        }
+        ArgumentNullException.ThrowIfNull(writer);
 
         IEnumerable<TData>? values = getter.Invoke(instance);
         if (values != null)
         {
+            if (seriesName != null)
+            {
+                writer.WriteStartElement(seriesName);
+            }
+
             foreach (TData value in values)
             {
                 writer.WriteStartElement(itemName);
                 value.WriteXml(writer);
                 writer.WriteEndElement();
             }
-        }
 
-        if (seriesName != null)
-        {
-            writer.WriteEndElement();
+            if (seriesName != null)
+            {
+                writer.WriteEndElement();
+            }
         }
     }
 
@@ -78,7 +78,7 @@ public class NestedSeriesConvertHint<T, TData>(string? seriesName, string itemNa
     /// <remarks>Begins recording items for the collection.</remarks>
     public void ReadElement(XmlReader? reader, T instance)
     {
-        if (reader == null) throw new ArgumentNullException(nameof(reader));
+        ArgumentNullException.ThrowIfNull(reader);
 
         if (seriesName != null)
         {
@@ -86,7 +86,7 @@ public class NestedSeriesConvertHint<T, TData>(string? seriesName, string itemNa
         }
         else
         {
-            _recording ??= new List<TData>();
+            _recording ??= [];
 
             TData value = new();
             value.ReadXml(reader);
@@ -97,6 +97,8 @@ public class NestedSeriesConvertHint<T, TData>(string? seriesName, string itemNa
     /// <inheritdoc cref="ReadElement"/>
     private void ReadCollection(XmlReader reader)
     {
+        _recording ??= [];
+
         if (reader.IsEmptyElement)
         {
             reader.ReadStartElement();
@@ -110,8 +112,6 @@ public class NestedSeriesConvertHint<T, TData>(string? seriesName, string itemNa
                 {
                     if (reader.Name == itemName)
                     {
-                        _recording ??= new List<TData>();
-
                         TData value = new();
                         value.ReadXml(reader);
                         _recording.Add(value);

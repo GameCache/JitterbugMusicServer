@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using JitterbugMusic.Models.Conversion;
 using JitterbugMusic.Models.Conversion.Simple;
 
@@ -15,6 +16,7 @@ public sealed class LicenseDto() : SubsonicContent<LicenseDto>("license", _Conve
     ];
 
     /// <summary>If the license is useable.</summary>
+    [Required]
     public bool? Valid { get; set; }
 
     /// <summary>Related user's email.</summary>

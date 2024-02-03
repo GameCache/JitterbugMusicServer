@@ -23,8 +23,8 @@ public abstract class BaseSeriesConvertHint<T, TData>
 
     protected BaseSeriesConvertHint()
     {
-        SeriesAttribute = FixModel(Tools.Randomizer.Create<TData>());
-        SeriesElement = FixModel(Tools.Randomizer.Create<TData>());
+        SeriesAttribute = Tools.Randomizer.Create<TData>();
+        SeriesElement = Tools.Randomizer.Create<TData>();
     }
 
     protected abstract ISeriesConvertHint<T> CreateSeriesHint(

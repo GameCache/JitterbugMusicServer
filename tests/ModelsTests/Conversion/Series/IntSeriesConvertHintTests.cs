@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using JitterbugMusic.Models.Conversion.Series;
 
 namespace JitterbugMusic.ModelsTests.Conversion.Series;
@@ -13,10 +12,5 @@ public class IntSeriesConvertHintTests : BaseSeriesConvertHint<IntSeriesConvertH
         Action<IntSeriesConvertHintTests, IEnumerable<int>?> setter)
     {
         return new IntSeriesConvertHint<IntSeriesConvertHintTests>(seriesName, itemName, getter, setter);
-    }
-
-    protected override IEnumerable<int> FixModel(IEnumerable<int> original)
-    {
-        return original.ToList();
     }
 }
