@@ -25,13 +25,13 @@ public abstract class XmlHintSerializable<T>(
     }
 
     /// <inheritdoc/>
-    public void ReadXml(XmlReader reader)
+    public virtual void ReadXml(XmlReader reader)
     {
-        XmlHintConverter.FromXml(reader, (T)this, AttributeHints, ElementHints);
+        _ = XmlHintConverter.FromXml(reader, (T)this, AttributeHints, ElementHints);
     }
 
     /// <inheritdoc/>
-    public void WriteXml(XmlWriter writer)
+    public virtual void WriteXml(XmlWriter writer)
     {
         XmlHintConverter.ToXml(writer, (T)this, AttributeHints, ElementHints);
     }

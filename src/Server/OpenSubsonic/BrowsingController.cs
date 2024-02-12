@@ -1,4 +1,5 @@
 using JitterbugMusic.Models.OpenSubsonic;
+using JitterbugMusic.Models.OpenSubsonic.AlbumSongLists;
 using JitterbugMusic.Models.OpenSubsonic.Browsing;
 using Microsoft.AspNetCore.Mvc;
 
@@ -119,6 +120,164 @@ public sealed class BrowsingController : ControllerBase
                         Title = "Chi.Otic",
                         Artist = "Chi.Otic",
                         CoverArt = "ar-100000027"
+                    }
+                ]
+            }
+        };
+    }
+
+    /// <summary>Returns all genres.</summary>
+    /// <param name="options"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
+    /// <returns><inheritdoc cref="GenresDto" path="/summary"/></returns>
+    [HttpGet("getGenres")]
+    public SubsonicDataResponse<GenresDto> GetGenres([FromQuery] SubsonicRequest options)
+    {
+        return new SubsonicDataResponse<GenresDto>()
+        {
+            Content = new GenresDto()
+            {
+                Genre =
+                [
+                    new GenreDto()
+                    {
+                        SongCount = 1,
+                        AlbumCount = 1,
+                        Value = "Punk"
+                    },
+                    new GenreDto()
+                    {
+                        SongCount = 4,
+                        AlbumCount = 1,
+                        Value = "Dark Ambient"
+                    },
+                    new GenreDto()
+                    {
+                        SongCount = 6,
+                        AlbumCount = 1,
+                        Value = "Noise"
+                    },
+                    new GenreDto()
+                    {
+                        SongCount = 11,
+                        AlbumCount = 1,
+                        Value = "Electronica"
+                    },
+                    new GenreDto()
+                    {
+                        SongCount = 11,
+                        AlbumCount = 1,
+                        Value = "Dance"
+                    },
+                    new GenreDto()
+                    {
+                        SongCount = 12,
+                        AlbumCount = 1,
+                        Value = "Electronic"
+                    },
+                    new GenreDto()
+                    {
+                        SongCount = 20,
+                        AlbumCount = 1,
+                        Value = "Hip-Hop"
+                    }
+                ]
+            }
+        };
+    }
+
+    /// <summary>Returns all artists.</summary>
+    /// <param name="options"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
+    /// <param name="musicFolderId">
+    ///     If specified, only return artists in the music folder with the given ID. See getMusicFolders.
+    /// </param>
+    /// <returns><inheritdoc cref="ArtistsDto" path="/summary"/></returns>
+    /// <remarks>Similar to getIndexes, but organizes music according to ID3 tags.</remarks>
+    [HttpGet("getArtists")]
+    public SubsonicDataResponse<ArtistsDto> GetArtists(
+        [FromQuery] SubsonicRequest options,
+        [FromQuery] string? musicFolderId)
+    {
+        return new SubsonicDataResponse<ArtistsDto>()
+        {
+            Content = new ArtistsDto()
+            {
+                IgnoredArticles = ["The", "An", "A", "Die", "Das", "Ein", "Eine", "Les", "Le", "La"],
+                Index = [
+                    new IndexId3Dto()
+                    {
+                        Name = "C",
+                        Artist = [
+                            new ArtistId3Dto()
+                            {
+                                Id = "100000016",
+                                Name = "CANDY",
+                                CoverArt = "ar-100000016",
+                                AlbumCount = 1
+                            },
+                            new ArtistId3Dto()
+                            {
+                                Id = "100000017",
+                                Name = "Chic",
+                                CoverArt = "ar-100000027",
+                                AlbumCount = 0
+                            }
+                        ]
+                    },
+                    new IndexId3Dto()
+                    {
+                        Name = "I",
+                        Artist = [
+                            new ArtistId3Dto()
+                            {
+                                Id = "100000013",
+                                Name = "Ok1",
+                                CoverArt = "ar-100000013",
+                                AlbumCount = 1,
+                                Starred = DateTime.UtcNow
+                            }
+                        ]
+                    }
+                ]
+            }
+        };
+    }
+
+    /// <summary>
+    ///     Returns details for an artist, including a list of albums.
+    ///     This method organizes music according to ID3 tags.
+    /// </summary>
+    /// <param name="options"><inheritdoc cref="SubsonicRequest" path="/summary"/></param>
+    /// <param name="id">The artist ID.</param>
+    /// <returns><inheritdoc cref="IndexesDto" path="/summary"/></returns>
+    /// <remarks>Similar to getIndexes, but organizes music according to ID3 tags.</remarks>
+    [HttpGet("getArtist")]
+    public SubsonicDataResponse<ArtistDto> GetArtist(
+        [FromQuery] SubsonicRequest options,
+        [FromQuery] string id)
+    {
+        return new SubsonicDataResponse<ArtistDto>()
+        {
+            Content = new ArtistDto()
+            {
+                Id = "5432",
+                Name = "AC/DC",
+                Album =
+                [
+                    new AlbumId3Dto()
+                    {
+                        Id = "11047",
+                        Name = "Back In Black",
+                        CoverArt = "al-200000002",
+                        SongCount = 12,
+                        Created = DateTime.UtcNow,
+                        Duration = 4568,
+                        PlayCount = 1,
+                        ArtistId = "100000002",
+                        Artist = "Synthetic",
+                        Year = 2007,
+                        Genre = "Electronic",
+                        UserRating = 5,
+                        Starred = "2021-02-22T05:51:53Z"
                     }
                 ]
             }

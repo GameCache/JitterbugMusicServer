@@ -84,7 +84,7 @@ public class SubsonicDataResponse<T> : IXmlSerializable where T : SubsonicConten
     /// <inheritdoc/>
     public void ReadXml(XmlReader reader)
     {
-        XmlHintConverter.FromXml(reader, this, _ConvertAttributeHints, _ConvertElementHints);
+        _ = XmlHintConverter.FromXml(reader, this, _ConvertAttributeHints, _ConvertElementHints);
     }
 
     /// <inheritdoc/>

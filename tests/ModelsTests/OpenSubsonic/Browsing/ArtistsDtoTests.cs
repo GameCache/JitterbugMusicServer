@@ -5,10 +5,10 @@ using Xunit;
 
 namespace JitterbugMusic.ModelsTests.OpenSubsonic.Browsing;
 
-public class IndexesDtoTests : BaseSubsonicDtoTests<IndexesDto>
+public class ArtistsDtoTests : BaseSubsonicDtoTests<ArtistsDto>
 {
     [Theory, RandomData]
-    internal void CombinedIgnoredArticles_NullSafe(IndexesDto original)
+    internal void CombinedIgnoredArticles_NullSafe(ArtistsDto original)
     {
         original.CombinedIgnoredArticles = null;
         original.CombinedIgnoredArticles.Assert().Is(null);

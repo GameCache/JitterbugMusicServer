@@ -57,6 +57,7 @@ public static class Program
         string prefix = "coverage";
         string postfix = ".cobertura.xml";
 
+        string toolsDir = Path.Combine(_ArtifactDir, "tools");
         string coverageDir = Path.Combine(_ArtifactDir, "coverage");
         string testDir = Path.Combine(coverageDir, "testResults");
         string reportDir = Path.Combine(coverageDir, "report");
@@ -77,8 +78,8 @@ public static class Program
             File.Copy(result, Path.Combine(coverageDir, $"{prefix}{count++}{postfix}"));
         }
 
-        await RunAsync("dotnet", "tool update -g dotnet-reportgenerator-globaltool");
-        await RunAsync("reportgenerator", $"-reports:{coverageDir}/*.xml -targetdir:{reportDir}");
+        await RunAsync("dotnet", $"tool update dotnet-reportgenerator-globaltool --tool-path {toolsDir}");
+        await RunAsync($"{toolsDir}/reportgenerator", $"-reports:{coverageDir}/*.xml -targetdir:{reportDir}");
     }
 
     /// <summary>Deletes and creates a directory.</summary>

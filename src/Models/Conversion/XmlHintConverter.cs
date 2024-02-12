@@ -38,9 +38,12 @@ public static class XmlHintConverter
     /// <param name="attributeHints">Convert behavior for properties representing attributes.</param>
     /// <param name="elementHints">Convert behavior for properties representing elements.</param>
     /// <exception cref="ArgumentNullException">When <paramref name="reader"/> is null.</exception>
-    public static void FromXml<T>(XmlReader? reader, T instance,
+    /// <returns>Element value if present.</returns>
+    public static string? FromXml<T>(XmlReader? reader, T instance,
         IEnumerable<IConvertHint<T>>? attributeHints, IEnumerable<IConvertHint<T>>? elementHints)
     {
+        string? innerValue = null;
+
         ArgumentNullException.ThrowIfNull(reader);
         if (attributeHints != null)
         {
@@ -61,6 +64,12 @@ public static class XmlHintConverter
         else
         {
             reader.ReadStartElement();
+
+            if (reader.HasValue)
+            {
+                innerValue = reader.Value;
+            }
+
             while (reader.MoveToContent() != XmlNodeType.EndElement)
             {
                 if (reader.IsStartElement())
@@ -97,5 +106,7 @@ public static class XmlHintConverter
                 hint.ResetToDefault(instance);
             }
         }
+
+        return innerValue;
     }
 }
